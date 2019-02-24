@@ -5,12 +5,12 @@ import hashlib
 
 def get_files_recursive(path):
     files = []
-    for item in os.listdir(path):
-        item_path = os.path.join(path, item)
-        if os.path.isfile(item_path):
-            files.append(item_path)
-        elif os.path.isdir(item_path):
-            files += get_files_recursive(item_path)
+    for file_name in os.listdir(path):
+        file_path = os.path.join(path, file_name)
+        if os.path.isfile(file_path):
+            files.append(file_path)
+        elif os.path.isdir(file_path):
+            files += get_files_recursive(file_path)
     return files
 
 
@@ -39,10 +39,10 @@ def search_duplicates(path):
     return [unique_dict[file_hash] for file_hash in duplicate_list]
 
 
-def print_duplicate(dup):
-    print("Files with the same name and size {} bytes:".format(dup[0][1]))
-    for item in dup:
-        print(" {}".format(item[0]))
+def print_duplicate(dup_files):
+    print("Files with the same name and size {} bytes:".format(dup_files[0][1]))
+    for dup_file in dup_files:
+        print(" {}".format(dup_file[0]))
 
 
 def main():
