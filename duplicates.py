@@ -3,15 +3,13 @@ import sys
 import hashlib
 
 
-def get_files_recursive(path):
-    files = []
-    for file_name in os.listdir(path):
-        file_path = os.path.join(path, file_name)
-        if os.path.isfile(file_path):
-            files.append(file_path)
-        elif os.path.isdir(file_path):
-            files += get_files_recursive(file_path)
-    return files
+def get_files_list(path):
+    file_paths = []
+    for root_path, _, file_names in os.walk(path):
+        for file_name in file_names:
+            file_path = os.path.join(root_path, file_name)
+            file_paths.append(file_path)
+    return file_paths
 
 
 def get_file_hash(path, fsize):
@@ -21,7 +19,7 @@ def get_file_hash(path, fsize):
 
 
 def search_duplicates(path):
-    files = get_files_recursive(path)
+    files = get_files_list(path)
     unique_dict = {}
     duplicate_list = []
 
@@ -48,10 +46,19 @@ def print_duplicate(dup_files):
 def main():
     try:
         path = sys.argv[1]
-        for dup in search_duplicates(path):
-            print_duplicate(dup)
     except IndexError:
         sys.exit("Command line error")
+
+    if not os.path.isdir(path):
+        sys.exit("'{}' is not a directory".format(path))
+
+    duplicates = search_duplicates(path)
+
+    if not duplicates:
+        sys.exit("Duplicate files is not found")
+
+    for dup in duplicates:
+        print_duplicate(dup)
 
 
 if __name__ == "__main__":
