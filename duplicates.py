@@ -17,6 +17,15 @@ def search_duplicates(path):
     return {info: paths for info, paths in files_list.items() if len(paths) > 1}
 
 
+def print_duplicates(duplicates):
+    for info, paths in duplicates.items():
+        print("Duplicate file '{}' with size {}:".format(*info))
+        print("\n".join([" {}".format(path) for path in paths]))
+
+    if not duplicates:
+        print("Duplicate files is not found")
+
+
 def main():
     try:
         path = sys.argv[1]
@@ -27,14 +36,7 @@ def main():
         sys.exit("'{}' is not a directory".format(path))
 
     duplicates = search_duplicates(path)
-
-    if not duplicates:
-        sys.exit("Duplicate files is not found")
-
-    for info, paths in duplicates.items():
-        print("Duplicate file '{}' with size {}:".format(*info))
-        for path in paths:
-            print(" {}".format(path))
+    print_duplicates(duplicates)
 
 
 if __name__ == "__main__":
