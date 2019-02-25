@@ -6,14 +6,9 @@ Script to search for duplicate files. Search criteria is same name and size.
 
 ```bash
 $ python duplicates.py .
-Files with the same name and size 4096 bytes:
+Duplicate file 'master' with size 41:
  ./.git/refs/heads/master
- ./.git/logs/refs/heads/master
-Files with the same name and size 4096 bytes:
- ./.git/refs/remotes/origin/HEAD
- ./.git/logs/refs/remotes/origin/HEAD
- ./.git/logs/HEAD
- ./.git/HEAD
+ ./.git/refs/remotes/origin/master
 ```
 
 # Project Goals
